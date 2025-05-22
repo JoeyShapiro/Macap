@@ -3,7 +3,7 @@
 
 #include <windows.h>
 
-#define DURATION 2000
+#define DURATION 500
 
 HHOOK g_hKeyboardHook = NULL;
 DWORD start = 0;
@@ -23,13 +23,11 @@ LRESULT CALLBACK LowLevelKeyboardProc(int code, WPARAM wParam, LPARAM lParam)
 			allowed = false;
 		return CallNextHookEx(g_hKeyboardHook, code, wParam, lParam);
 	}
-	else if (event->time-start < DURATION)
-		return 1;
 	else if (!key_up && start == 0) {
 		start = event->time;
 		return 1;
 	}
-	else if (!key_up)
+	else if (!key_up || event->time-start < DURATION)
 		return 1;
 	
 	start = 0;
